@@ -1,18 +1,27 @@
 from rest_framework import serializers
 
+from logistic.models import Product, Stock, StockProduct
+
+
 
 class ProductSerializer(serializers.ModelSerializer):
-    # настройте сериализатор для продукта
-    pass
+    class Meta():
+        model = Product
+        fields = ['id', 'title', 'description']
+
 
 
 class ProductPositionSerializer(serializers.ModelSerializer):
-    # настройте сериализатор для позиции продукта на складе
-    pass
+    class Meta():
+        model = StockProduct
+        fields = ['stock', 'product', 'quantity', 'price']
 
 
 class StockSerializer(serializers.ModelSerializer):
     positions = ProductPositionSerializer(many=True)
+    class Meta():
+        model = Stock
+        fields = ['id', 'address', 'products', 'positions']
 
     # настройте сериализатор для склада
 
